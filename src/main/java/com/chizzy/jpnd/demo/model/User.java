@@ -15,7 +15,7 @@ public class User implements Serializable {
     private String password;
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
     private List<Role> roles;
     public User(){}
 
