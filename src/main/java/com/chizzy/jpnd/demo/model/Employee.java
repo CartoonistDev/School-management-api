@@ -1,28 +1,33 @@
 package com.chizzy.jpnd.demo.model;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
+@NoArgsConstructor
 public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long employeeId;
 
     private String firstName;
     private String lastName;
     private String email;
     private int phoneNumber;
 
-    public Employee(){}
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
+    private List<Role> roles;
 
-    public Long getId() {
-        return id;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFirstName() {
@@ -55,5 +60,12 @@ public class Employee implements Serializable {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

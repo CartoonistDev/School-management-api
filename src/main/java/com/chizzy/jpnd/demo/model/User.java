@@ -1,10 +1,13 @@
 package com.chizzy.jpnd.demo.model;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
+@NoArgsConstructor
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +20,6 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
     private List<Role> roles;
-    public User(){}
 
     public User(String firstName, String lastName, String password, String email) {
         this.firstName = firstName;
