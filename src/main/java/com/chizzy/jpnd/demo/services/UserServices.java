@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +22,9 @@ public class UserServices {
     @Autowired
     private UserRepository userRepository;
 
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
     public User saveUser(User user){
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
         return userRepository.save(newUser);
