@@ -6,4 +6,3 @@
 - Get an employee role
 - Get employee details
 - Get student details
-
