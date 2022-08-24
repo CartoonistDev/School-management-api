@@ -1,14 +1,17 @@
 package com.chizzy.jpnd.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +22,15 @@ public class Employee implements Serializable {
     private String email;
     private int phoneNumber;
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
-    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "employee_roles",
+        joinColumns = {
+            @JoinColumn(name = "employee_id", referencedColumnName = "id")
+        }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id")
+        }
+    )
+    private Set<Role> roles;
 
     public Long getEmployeeId() {
         return employeeId;
@@ -61,11 +71,11 @@ public class Employee implements Serializable {
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

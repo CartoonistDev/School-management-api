@@ -2,19 +2,19 @@ package com.chizzy.jpnd.demo.controllers;
 
 import com.chizzy.jpnd.demo.dto.EmployeeDTO;
 import com.chizzy.jpnd.demo.model.Employee;
-import com.chizzy.jpnd.demo.services.EmployeeServices;
-import com.chizzy.jpnd.demo.services.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chizzy.jpnd.demo.services.implementation.EmployeeServiceImpl;
+import com.chizzy.jpnd.demo.services.implementation.UserServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/employee")
 public class EmployeeController {
-    @Autowired
-    private EmployeeServices employeeServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final EmployeeServiceImpl employeeServices;
+
+    private final UserServiceImpl userServices;
 
     @PostMapping
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO){
@@ -55,7 +55,7 @@ public class EmployeeController {
 
     //Converting user input "DTO" to actual objects to be used by the database
     private EmployeeDTO employeeDTO(Employee employee){
-        EmployeeDTO employeeDTO = new EmployeeDTO();
+        EmployeeDTO employeeDTO = new EmployeeDTO(employee.getFirstName(), employee.getLastName(), employee.getEmail(), employee.getPhoneNumber());
 
         employeeDTO.setEmail(employee.getEmail());
         employeeDTO.setFirstName(employee.getFirstName());

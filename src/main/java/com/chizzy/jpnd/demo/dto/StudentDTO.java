@@ -1,10 +1,15 @@
 package com.chizzy.jpnd.demo.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class StudentDTO {
     private Long studentId;
-
+    @NotBlank(message = "firstname cannot be empty")
     private String firstName;
+    @NotBlank(message = "lastname cannot be empty")
     private String lastName;
+    @NotNull
     private int age;
 
     public Long getStudentId() {

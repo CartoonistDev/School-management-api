@@ -1,8 +1,11 @@
 package com.chizzy.jpnd.demo.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class StudentClassDTO {
     private Long classId;
 
+    @NotBlank
     private String className;
 
     public Long getClassId() {

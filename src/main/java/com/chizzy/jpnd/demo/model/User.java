@@ -1,13 +1,16 @@
 package com.chizzy.jpnd.demo.model;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +21,15 @@ public class User implements Serializable {
     private String password;
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Role.class)
-    private List<Role> roles;
-
-    public User(String firstName, String lastName, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id")
+            }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id")
     }
+    )
+    private Set<Role> roles;
 
     public Long getId() {
         return id;
@@ -68,11 +71,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

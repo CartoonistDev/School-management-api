@@ -1,13 +1,26 @@
 package com.chizzy.jpnd.demo.dto;
 
+import lombok.Builder;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Data
+@Builder
 public class EmployeeDTO {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private int phoneNumber;
 
-    public EmployeeDTO(){}
+    @NotBlank(message = "firstname cannot be empty")
+    private String firstName;
+
+    @NotBlank(message = "lastname cannot be empty")
+    private String lastName;
+
+    @NotBlank(message = "email cannot be empty")
+    private String email;
+    @NotNull(message = "phone number cannot be empty")
+    private int phoneNumber;
 
     public EmployeeDTO(String firstName, String lastName, String email, int phoneNumber) {
         super();

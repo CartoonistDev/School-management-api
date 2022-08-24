@@ -1,8 +1,11 @@
 package com.chizzy.jpnd.demo.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class RoleDTO {
     private Long id;
 
+    @NotBlank
     private String name;
 
     public Long getId() {

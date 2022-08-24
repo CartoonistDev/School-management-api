@@ -1,9 +1,10 @@
-package com.chizzy.jpnd.demo.services;
+package com.chizzy.jpnd.demo.services.implementation;
 
 import com.chizzy.jpnd.demo.model.Role;
 import com.chizzy.jpnd.demo.model.User;
 import com.chizzy.jpnd.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chizzy.jpnd.demo.services.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,22 +18,28 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserServices {
+@AllArgsConstructor
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    @Override
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    @Override
     public User saveUser(User user){
-        User newUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
+        User newUser = new User();
         return userRepository.save(newUser);
     }
 
+    @Override
     public void delete(Long userId){
         userRepository.deleteById(userId);
     }
+
+    @Override
     public UserDetails getUserByUsername(String username){
         User user = userRepository.findByEmail(username);
         if (user!= null){
@@ -41,6 +48,7 @@ public class UserServices {
             throw new UsernameNotFoundException("Username or password invalid!");
         }
     }
+
 
     private Collection<? extends GrantedAuthority> mapUserToRoles(Collection<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package com.chizzy.jpnd.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "student")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +19,14 @@ public class Student implements Serializable {
     private String lastName;
     private int age;
 
-    @ManyToMany(targetEntity = StudentClass.class)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = StudentClass.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "student_class",
+            joinColumns = {
+                    @JoinColumn(name = "student_id", referencedColumnName = "id")
+            }, inverseJoinColumns = {
+            @JoinColumn(name = "class_id", referencedColumnName = "id")
+    }
+    )
     private StudentClass klass;
 
     public Long getStudentId() {

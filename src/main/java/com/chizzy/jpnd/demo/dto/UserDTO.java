@@ -1,13 +1,17 @@
 package com.chizzy.jpnd.demo.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class UserDTO {
     private Long id;
+    @NotBlank(message = "firstname cannot be empty")
     private String firstName;
+    @NotBlank(message = "lastname cannot be empty")
     private String lastName;
+    @NotBlank(message = "password cannot be empty")
     private String password;
+    @NotBlank(message = "email cannot be empty")
     private String email;
-
-    public UserDTO(){}
 
     public UserDTO(String firstName, String lastName, String password, String email) {
         super();

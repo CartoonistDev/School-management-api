@@ -1,8 +1,10 @@
-package com.chizzy.jpnd.demo.services;
+package com.chizzy.jpnd.demo.services.implementation;
 
 import com.chizzy.jpnd.demo.model.Employee;
 import com.chizzy.jpnd.demo.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chizzy.jpnd.demo.repository.RoleRepository;
+import com.chizzy.jpnd.demo.services.EmployeeService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,18 +13,24 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class EmployeeServices {
-    @Autowired
-    private EmployeeRepository employeeRepository;
+@AllArgsConstructor
+public class EmployeeServiceImpl implements EmployeeService {
 
+    private final EmployeeRepository employeeRepository;
+
+    private final RoleRepository roleRepository;
+
+    @Override
     public List<Employee> getAllEmployees(){
         return employeeRepository.findAll();
     }
 
+    @Override
     public Employee saveEmployee(Employee employee){
-       return employeeRepository.save(employee);
+        return employeeRepository.save(employee);
     }
 
+    @Override
     public Employee getEmployeeById(Long employeeId){
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
         Employee employee;
@@ -34,8 +42,8 @@ public class EmployeeServices {
         return employee;
     }
 
-    public void deleteEmployee(Long employeeId){
+    @Override
+    public void deleteEmployee(Long employeeId) {
         employeeRepository.deleteById(employeeId);
     }
-
 }

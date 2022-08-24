@@ -1,9 +1,10 @@
-package com.chizzy.jpnd.demo.services;
+package com.chizzy.jpnd.demo.services.implementation;
 
 import com.chizzy.jpnd.demo.model.Student;
 import com.chizzy.jpnd.demo.model.StudentClass;
 import com.chizzy.jpnd.demo.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chizzy.jpnd.demo.services.StudentService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,13 +13,17 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StudentServices {
-    @Autowired
-    private StudentRepository studentRepository;
+@AllArgsConstructor
+public class StudentServiceImpl implements StudentService {
 
+    private final StudentRepository studentRepository;
+
+    @Override
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
+
+    @Override
     public Student getStudent(Long studentId){
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Student student;
@@ -29,11 +34,14 @@ public class StudentServices {
         }
     }
 
+    @Override
     public Student saveStudent(Student student, StudentClass studentClass){
         student.setKlass(studentClass);
         return studentRepository.save(student);
     }
 
-    
-
+    @Override
+    public void deleteStudent(Long studentId){
+        studentRepository.deleteById(studentId);
+    }
 }
