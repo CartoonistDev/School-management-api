@@ -30,8 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user){
-        User newUser = new User();
-        return userRepository.save(newUser);
+        return userRepository.save(user);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
         if (user!= null){
             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapUserToRoles(user.getRoles()));
         } else {
-            throw new UsernameNotFoundException("Username or password invalid!");
+            throw new UsernameNotFoundException("Invalid username!");
         }
     }
 

@@ -2,22 +2,24 @@ package com.chizzy.jpnd.demo.controllers;
 
 import com.chizzy.jpnd.demo.dto.EmployeeDTO;
 import com.chizzy.jpnd.demo.model.Employee;
-import com.chizzy.jpnd.demo.services.implementation.EmployeeServiceImpl;
-import com.chizzy.jpnd.demo.services.implementation.UserServiceImpl;
+import com.chizzy.jpnd.demo.services.EmployeeService;
+import com.chizzy.jpnd.demo.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private final EmployeeServiceImpl employeeServices;
+    private final EmployeeService employeeServices;
 
-    private final UserServiceImpl userServices;
+    private final UserService userServices;
 
     @PostMapping
-    public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO){
+    public EmployeeDTO saveEmployee(@RequestBody @Valid EmployeeDTO employeeDTO){
         try {
             //Using DTOs to help eliminate client input directly in sync with services
 

@@ -1,9 +1,11 @@
 package com.chizzy.jpnd.demo.model;
 
+import com.chizzy.jpnd.demo.dto.StudentClassDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Entity
@@ -27,10 +29,18 @@ public class Student implements Serializable {
             @JoinColumn(name = "class_id", referencedColumnName = "id")
     }
     )
-    private StudentClass klass;
+    private @NotBlank(message = "student class cannot be blank") StudentClass klass;
 
     public Long getStudentId() {
         return studentId;
+    }
+
+    public StudentClass getKlass() {
+        return klass;
+    }
+
+    public void setKlass(StudentClass klass) {
+        this.klass = klass;
     }
 
     public void setStudentId(Long studentId) {
@@ -61,11 +71,4 @@ public class Student implements Serializable {
         this.age = age;
     }
 
-    public StudentClass getKlass() {
-        return klass;
-    }
-
-    public void setKlass(StudentClass klass) {
-        this.klass = klass;
-    }
 }

@@ -11,6 +11,16 @@ public class StudentDTO {
     private String lastName;
     @NotNull
     private int age;
+    @NotBlank(message = "student class cannot be blank")
+    private StudentClassDTO klass;
+
+    private StudentClassDTO getKlass() {
+        return klass;
+    }
+
+    public void setKlass(StudentClassDTO klass) {
+        this.klass = klass;
+    }
 
     public Long getStudentId() {
         return studentId;

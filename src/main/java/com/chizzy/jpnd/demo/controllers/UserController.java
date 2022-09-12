@@ -2,7 +2,7 @@ package com.chizzy.jpnd.demo.controllers;
 
 import com.chizzy.jpnd.demo.dto.UserDTO;
 import com.chizzy.jpnd.demo.model.User;
-import com.chizzy.jpnd.demo.services.implementation.UserServiceImpl;
+import com.chizzy.jpnd.demo.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    private final UserServiceImpl userServices;
+    private final UserService userServices;
 
     @PostMapping
     public UserDTO saveUser(@RequestBody UserDTO userDTO){
